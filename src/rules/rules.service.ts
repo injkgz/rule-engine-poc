@@ -1,69 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-const groupRules = {
-    conditions: {
-      any: [
-        {
-          fact: 'group',
-          operator: 'equal',
-          value: 'injecti0n.kg@gmail.com',
-          path: '$.title',
-        }
-      ],
-      
-    },
-    onSuccess() {
-      console.log('on success called');
-    },
-    onFailure() {
-      console.log('on failure called');
-    },
-    event: {
-      type: 'message',
-      params: {
-        data: 'hello-world!',
-      },
-    },
-  };
-
-  const userRules = {
-    conditions: {
-      any: [
-        {
-          fact: 'users',
-          operator: 'equal',
-          value: 'injecti0n.kg@gmail.com',
-          path: '$.email',
-        }
-      ],
-      
-    },
-    onSuccess() {
-      console.log('on success called');
-    },
-    onFailure() {
-      console.log('on failure called');
-    },
-    event: {
-      type: 'message',
-      params: {
-        data: 'hello-world!',
-      },
-    },
-  };
+import { Rules } from './entity/rules.entity';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { createRuleDTO } from './input/create-rule.input';
+import { RulesType } from './type/rules.model';
 @Injectable()
 export class RulesService {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  constructor(
+    @InjectModel(Rules.name)
+    private readonly rulesModel: Model<Rules>,
+  ) {}
   async getRules(type: string): Promise<string> {
-      if(type === 'group'){
-        return JSON.stringify(groupRules);      
-      }
-      if(type === 'user'){
-        return JSON.stringify(userRules);
-      }
-      else {
-        throw new NotFoundException(type);
-      }
-    
+    if (type === 'group') {
+      const rule = await this.rulesModel.find();
+      console.log(rule[0].rule);
+      return rule[0].rule;
+    }
+    if (type === 'user') {
+      return null;
+    } else {
+      throw new NotFoundException(type);
+    }
+  }
+  async createRule(rule: createRuleDTO): Promise<RulesType> {
+    console.log(rule);
+    return this.rulesModel.create(rule);
   }
 }

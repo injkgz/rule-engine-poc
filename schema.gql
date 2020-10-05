@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type RulesType {
+  _id: ID!
+  rule: String!
+}
+
 type Query {
   rules(type: String!): String!
+}
+
+type Mutation {
+  createRule(rule: createRuleDTO!): RulesType!
+}
+
+input createRuleDTO {
+  rule: String!
 }

@@ -24,6 +24,7 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/graphql": "^7.6.0",
+    "@nestjs/mongoose": "^7.0.2",
     "@nestjs/platform-express": "^7.0.0",
     "apollo-server-express": "^2.17.0",
     "class-transformer": "^0.3.1",
@@ -32,6 +33,7 @@
     "graphql-request": "^3.0.0",
     "graphql-tools": "^6.1.0",
     "json-rules-engine": "^5.0.3",
+    "mongoose": "^5.10.7",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4"
